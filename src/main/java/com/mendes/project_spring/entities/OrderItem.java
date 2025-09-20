@@ -1,5 +1,6 @@
 package com.mendes.project_spring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mendes.project_spring.entities.pk.OrderItemPk;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -14,14 +15,14 @@ public class OrderItem  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id = new OrderItemPk();
 
     private Integer quantity;
     private Double price;
 
     public OrderItem(){}
 
-    public OrderItem(Order order, Product product, Double price, Integer quantity) {
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
         super();
         id.setOrder(order);
         id.setProduct(product);
@@ -29,6 +30,7 @@ public class OrderItem  implements Serializable {
         this.quantity = quantity;
     }
 
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
